@@ -50,7 +50,7 @@ A specialized view to track the **90% stock cap**.
 - **Visual Element:** Horizontal gauge charts for high-risk SKUs
 - **The “Bottleneck” Insight:**  
   Highlights the single limiting item preventing additional schools from being served  
-  > Example: *“Missing 12 pairs of Size 8 shoes to unlock Springfield High”*
+  > Example: *"Missing 12 units of ZAPATO-34 to unlock Springfield High"*
 
 ---
 

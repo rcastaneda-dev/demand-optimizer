@@ -36,9 +36,10 @@ EquipRoute is a decision-support tool designed to manage the distribution of sch
 
 The system must ingest individual student requirements and aggregate them into **School Demand Profiles**.
 
-- **Student Requirement:**  
-  - 2 uniforms (specific SKU)  
-  - 1 pair of shoes (specific SKU)
+- **Student Requirement (1 full kit):**
+  - 1 shirt (BLANCA or CELESTE, specific size)
+  - 1 pants/skirt (FALDA AZUL CON TIRANTE, FALDA AZUL, FALDA BEIGE, SHORT AZUL, PANTALON BEIGE, or PANTALON AZUL, specific size)
+  - 1 pair of shoes (specific size)
 
 - **Aggregation Rule:**  
   - Total SKU demand per school =  
@@ -58,9 +59,9 @@ The system must enforce a global inventory safety threshold.
 - **Threshold:**  
   - No allocation plan may consume more than **90%** of available stock for any single SKU.
 
-- **SKU Independence:**  
-  - Constraints are enforced **per SKU**.  
-  - Example: `Shirt Small` and `Shirt Medium` are independent constraints.
+- **SKU Independence:**
+  - Constraints are enforced **per SKU**.
+  - Example: `BLANCA-T8` and `BLANCA-T10` are independent constraints.
 
 ---
 
@@ -101,15 +102,22 @@ The system must use an **Integer Linear Programming (ILP)** approach.
 ### Input Data
 
 **Inventory Table**
-- `SKU_ID`
+- `SKU_ID` — format: `{TYPE}-{SIZE}` (e.g. `BLANCA-T10`, `PANTALON AZUL-T14`, `ZAPATO-34`)
 - `Description`
 - `Total_Stock_Available`
+
+| Category | Types | Sizes |
+|----------|-------|-------|
+| Shirt | BLANCA, CELESTE | T1X, T4, T6, T8, T10, T12, T14, T16, T18, T20, T22 |
+| Pants/Skirt | FALDA AZUL CON TIRANTE, FALDA AZUL, FALDA BEIGE, SHORT AZUL, PANTALON BEIGE, PANTALON AZUL | T1X, T2X, T4, T6, T8, T10, T12, T14, T16, T18, T20, T22 |
+| Shoes | ZAPATO | 22–41 |
 
 **Student Table**
 - `Student_ID`
 - `School_ID`
-- `Uniform_Size_SKU`
-- `Shoe_Size_SKU`
+- `Shirt_SKU` — shirt type + size
+- `Pants_SKU` — pants/skirt type + size
+- `Shoe_Size_SKU` — shoe size
 
 ---
 

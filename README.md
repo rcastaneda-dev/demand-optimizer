@@ -10,6 +10,18 @@ A decision-support tool for optimizing school uniform and shoe distribution. Use
 
 A school is only eligible if **100% of its students' needs** can be fulfilled (all-or-nothing).
 
+## Uniform Kit
+
+Each student receives a full kit of **3 items**, each tracked as a separate inventory SKU:
+
+| Item | Types | Sizes |
+|------|-------|-------|
+| **Shirt** | BLANCA, CELESTE | T1X, T4, T6, T8, T10, T12, T14, T16, T18, T20, T22 |
+| **Pants/Skirt** | FALDA AZUL CON TIRANTE, FALDA AZUL, FALDA BEIGE, SHORT AZUL, PANTALON BEIGE, PANTALON AZUL | T1X, T2X, T4, T6, T8, T10, T12, T14, T16, T18, T20, T22 |
+| **Shoes** | ZAPATO | 22–41 |
+
+SKU format: `{TYPE}-{SIZE}` (e.g. `BLANCA-T10`, `PANTALON AZUL-T14`, `ZAPATO-34`)
+
 ## Project Structure
 
 ```

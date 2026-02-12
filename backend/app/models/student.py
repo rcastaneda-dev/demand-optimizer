@@ -9,5 +9,6 @@ class Student(Base):
 
     student_id: Mapped[str] = mapped_column(String, primary_key=True)
     school_id: Mapped[str] = mapped_column(String, nullable=False, index=True)
-    uniform_size_sku: Mapped[str] = mapped_column(String, nullable=False)
+    shirt_sku: Mapped[str] = mapped_column(String, nullable=False)
+    pants_sku: Mapped[str] = mapped_column(String, nullable=False)
     shoe_size_sku: Mapped[str] = mapped_column(String, nullable=False)

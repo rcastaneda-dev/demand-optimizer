@@ -24,7 +24,11 @@ Since we are removing Redis, we can use the database itself to track job status.
 * **Primary Database:** **SQLite** (or PostgreSQL if scaling is a concern).
     * *Why:* For many internal tools, SQLite is more than enough. It's a single file, requires zero configuration, and handles relational data perfectly.
 * **State Tracking:** A `jobs` table in SQLite replaces Redis.
-    * *Columns:* `job_id`, `status` (PENDING, PROCESSING, COMPLETED), `result_json`.
+    * *Columns:* `job_id`, `status` (PENDING, PROCESSING, COMPLETED), `result_json`, `created_at`.
+* **Schema:**
+    * `inventory` — `sku_id` (PK, e.g. `BLANCA-T10`), `description`, `total_stock_available`
+    * `students` — `student_id` (PK), `school_id`, `shirt_sku`, `pants_sku`, `shoe_size_sku`
+    * `jobs` — optimization run tracking
 
 ---
 

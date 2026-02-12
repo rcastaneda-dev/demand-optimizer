@@ -1,6 +1,10 @@
 """Aggregate student-level data into School Demand Profiles (FR1).
 
-Each student requires 2 uniforms (same SKU) and 1 pair of shoes.
+Each student requires:
+  - 1 shirt (BLANCA or CELESTE in a specific size)
+  - 1 pants/skirt (one of 6 types in a specific size)
+  - 1 pair of shoes (specific size)
+
 The output is a dict keyed by school_id containing:
   - total_students: number of students in the school
   - sku_demand: {sku_id: total_units_needed}
@@ -13,9 +17,6 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.models.student import Student
-
-UNIFORMS_PER_STUDENT = 2
-SHOES_PER_STUDENT = 1
 
 
 @dataclass
@@ -36,8 +37,9 @@ async def aggregate_demand(session: AsyncSession) -> dict[str, SchoolDemandProfi
 
     for s in students:
         student_counts[s.school_id] += 1
-        demand_accum[s.school_id][s.uniform_size_sku] += UNIFORMS_PER_STUDENT
-        demand_accum[s.school_id][s.shoe_size_sku] += SHOES_PER_STUDENT
+        demand_accum[s.school_id][s.shirt_sku] += 1
+        demand_accum[s.school_id][s.pants_sku] += 1
+        demand_accum[s.school_id][s.shoe_size_sku] += 1
 
     for school_id, sku_demand in demand_accum.items():
         profiles[school_id] = SchoolDemandProfile(
