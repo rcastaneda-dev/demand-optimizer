@@ -6,7 +6,7 @@ function TabBarIcon(props: {
   name: React.ComponentProps<typeof FontAwesome>["name"];
   color: string;
 }) {
-  return <FontAwesome size={24} style={{ marginBottom: -3 }} {...props} />;
+  return <FontAwesome size={22} style={{ marginBottom: -3 }} {...props} />;
 }
 
 export default function TabLayout() {
@@ -20,16 +20,21 @@ export default function TabLayout() {
           elevation: 8,
           shadowOpacity: 0.1,
           shadowRadius: 8,
+          paddingBottom: 4,
+        },
+        tabBarLabelStyle: {
+          fontFamily: "Inter_500Medium",
+          fontSize: 11,
         },
         headerStyle: { backgroundColor: "#2D5BFF" },
         headerTintColor: "#fff",
-        headerTitleStyle: { fontWeight: "bold" },
+        headerTitleStyle: { fontWeight: "bold", fontFamily: "Inter_700Bold" },
       }}
     >
       <Tabs.Screen
         name="index"
         options={{
-          title: "Dashboard",
+          title: "Home",
           tabBarIcon: ({ color }) => (
             <TabBarIcon name="dashboard" color={color} />
           ),
@@ -50,6 +55,15 @@ export default function TabLayout() {
           title: "Inventory",
           tabBarIcon: ({ color }) => (
             <TabBarIcon name="bar-chart" color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="warehouse"
+        options={{
+          title: "Warehouse",
+          tabBarIcon: ({ color }) => (
+            <TabBarIcon name="truck" color={color} />
           ),
         }}
       />

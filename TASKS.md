@@ -78,9 +78,9 @@
   - e.g., "Missing 12 pairs of Size 8 shoes to unlock Springfield High"
 
 ### 2.5 Navigation & Polish
-- [ ] Set up tab/stack navigation: Home → Approved Schools → Inventory Health → Warehouse Prep
-- [ ] Apply design tokens: colors (#2D5BFF, #27AE60, #F2994A, #EB5757), Inter/Roboto fonts
-- [ ] Glassmorphism card styling for selected vs. excluded schools
+- [x] Set up tab/stack navigation: Home → Approved Schools → Inventory Health → Warehouse Prep
+- [x] Apply design tokens: colors (#2D5BFF, #27AE60, #F2994A, #EB5757), Inter/Roboto fonts
+- [x] Glassmorphism card styling for selected vs. excluded schools
 
 ---
 
