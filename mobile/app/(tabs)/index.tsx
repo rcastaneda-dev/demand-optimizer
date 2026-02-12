@@ -1,5 +1,5 @@
-import { useEffect } from "react";
-import { ScrollView, Text, View } from "react-native";
+import { useCallback, useEffect, useState } from "react";
+import { RefreshControl, ScrollView, Text, View } from "react-native";
 
 import { useApp } from "@/context/AppContext";
 import GlobalHealthBar from "@/components/GlobalHealthBar";
@@ -15,10 +15,17 @@ export default function DashboardScreen() {
     fetchInventory,
     startOptimization,
   } = useApp();
+  const [refreshing, setRefreshing] = useState(false);
 
   useEffect(() => {
     fetchSchools();
     fetchInventory();
+  }, [fetchSchools, fetchInventory]);
+
+  const onRefresh = useCallback(async () => {
+    setRefreshing(true);
+    await Promise.all([fetchSchools(), fetchInventory()]);
+    setRefreshing(false);
   }, [fetchSchools, fetchInventory]);
 
   const totalStudents = schools.reduce((sum, s) => sum + s.total_students, 0);
@@ -31,6 +38,9 @@ export default function DashboardScreen() {
       <ScrollView
         className="flex-1 px-4 pt-4"
         contentContainerStyle={{ paddingBottom: 100 }}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor="#2D5BFF" />
+        }
       >
         <GlobalHealthBar
           studentsServed={studentsServed}

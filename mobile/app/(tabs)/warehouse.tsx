@@ -1,7 +1,9 @@
-import { useMemo } from "react";
-import { SectionList, Text, View } from "react-native";
+import { useCallback, useMemo, useState } from "react";
+import { Pressable, RefreshControl, SectionList, Text, View } from "react-native";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
 
 import { useApp } from "@/context/AppContext";
+import BarcodeScanner from "@/components/BarcodeScanner";
 import type { PickingStudent } from "@/lib/types";
 
 const ITEM_TYPE_LABEL: Record<string, string> = {
@@ -11,7 +13,30 @@ const ITEM_TYPE_LABEL: Record<string, string> = {
 };
 
 export default function WarehouseScreen() {
-  const { pickingList, lastResult } = useApp();
+  const { pickingList, lastResult, fetchInventory } = useApp();
+  const [refreshing, setRefreshing] = useState(false);
+  const [scannerOpen, setScannerOpen] = useState(false);
+
+  // Collect all approved SKU IDs from the picking list
+  const approvedSkus = useMemo(() => {
+    const skus = new Set<string>();
+    if (pickingList) {
+      for (const school of pickingList.schools) {
+        for (const student of school.students) {
+          for (const item of student.items) {
+            skus.add(item.sku_id);
+          }
+        }
+      }
+    }
+    return skus;
+  }, [pickingList]);
+
+  const onRefresh = useCallback(async () => {
+    setRefreshing(true);
+    await fetchInventory();
+    setRefreshing(false);
+  }, [fetchInventory]);
 
   const sections = useMemo(() => {
     if (!pickingList) return [];
@@ -40,11 +65,20 @@ export default function WarehouseScreen() {
 
   return (
     <View className="flex-1 bg-gray-50">
+      <BarcodeScanner
+        visible={scannerOpen}
+        onClose={() => setScannerOpen(false)}
+        approvedSkus={approvedSkus}
+      />
+
       <SectionList
         sections={sections}
         keyExtractor={(item) => item.student_id}
         contentContainerStyle={{ padding: 16, paddingBottom: 32 }}
         stickySectionHeadersEnabled
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor="#2D5BFF" />
+        }
         renderSectionHeader={({ section }) => (
           <View className="mb-2 mt-4 rounded-xl bg-primary/10 px-4 py-3">
             <Text className="text-sm font-bold text-primary">
@@ -85,6 +119,15 @@ export default function WarehouseScreen() {
           </View>
         }
       />
+
+      {/* Scan-to-Verify FAB */}
+      <Pressable
+        onPress={() => setScannerOpen(true)}
+        className="absolute bottom-6 right-6 h-14 w-14 items-center justify-center rounded-full bg-primary shadow-lg"
+        style={{ elevation: 6 }}
+      >
+        <FontAwesome name="barcode" size={24} color="#fff" />
+      </Pressable>
     </View>
   );
 }

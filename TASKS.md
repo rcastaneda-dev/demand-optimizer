@@ -95,6 +95,6 @@
 - [x] Frontend screen rendering the picking list
 
 ### 3.3 Mobile-Specific Features
-- [ ] Pull-to-refresh for re-syncing inventory levels
-- [ ] Haptic feedback when 90% limit is breached during manual adjustments
-- [ ] Scan-to-Verify: camera-based barcode scanner for warehouse kit verification
+- [x] Pull-to-refresh for re-syncing inventory levels
+- [x] Haptic feedback when 90% limit is breached during manual adjustments
+- [x] Scan-to-Verify: camera-based barcode scanner for warehouse kit verification

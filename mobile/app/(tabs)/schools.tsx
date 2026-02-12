@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useState } from "react";
-import { FlatList, Pressable, Text, View } from "react-native";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { FlatList, Pressable, RefreshControl, Text, View } from "react-native";
 
 import { useApp } from "@/context/AppContext";
 import SchoolCard from "@/components/SchoolCard";
@@ -9,9 +9,16 @@ type SortMode = "students" | "bottlenecks";
 export default function SchoolsScreen() {
   const { schools, lastResult, fetchSchools } = useApp();
   const [sortMode, setSortMode] = useState<SortMode>("students");
+  const [refreshing, setRefreshing] = useState(false);
 
   useEffect(() => {
     fetchSchools();
+  }, [fetchSchools]);
+
+  const onRefresh = useCallback(async () => {
+    setRefreshing(true);
+    await fetchSchools();
+    setRefreshing(false);
   }, [fetchSchools]);
 
   const selectedIds = new Set(lastResult?.selection.selected_school_ids ?? []);
@@ -59,6 +66,9 @@ export default function SchoolsScreen() {
         data={sortedSchools}
         keyExtractor={(item) => item.school_id}
         contentContainerStyle={{ padding: 16 }}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor="#2D5BFF" />
+        }
         renderItem={({ item }) => (
           <SchoolCard
             school={item}

@@ -1,4 +1,6 @@
-import { Text, View } from "react-native";
+import { useEffect, useRef } from "react";
+import { Platform, Text, View } from "react-native";
+import * as Haptics from "expo-haptics";
 import type { InventoryItem } from "@/lib/types";
 
 interface Props {
@@ -19,6 +21,15 @@ function getTextColor(pct: number): string {
 
 export default function SkuGauge({ item }: Props) {
   const pct = Math.round(item.usage_pct * 100);
+  const prevPct = useRef(pct);
+
+  useEffect(() => {
+    // Trigger haptic when usage crosses the 90% safety cap
+    if (Platform.OS !== "web" && prevPct.current < 90 && pct >= 90) {
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Warning);
+    }
+    prevPct.current = pct;
+  }, [pct]);
 
   return (
     <View className="mb-3 rounded-2xl bg-white p-4 shadow-sm">

@@ -1,14 +1,21 @@
-import { useEffect, useMemo } from "react";
-import { ScrollView, Text, View } from "react-native";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { RefreshControl, ScrollView, Text, View } from "react-native";
 
 import { useApp } from "@/context/AppContext";
 import SkuGauge from "@/components/SkuGauge";
 
 export default function InventoryScreen() {
   const { inventory, lastResult, fetchInventory } = useApp();
+  const [refreshing, setRefreshing] = useState(false);
 
   useEffect(() => {
     fetchInventory();
+  }, [fetchInventory]);
+
+  const onRefresh = useCallback(async () => {
+    setRefreshing(true);
+    await fetchInventory();
+    setRefreshing(false);
   }, [fetchInventory]);
 
   const sortedInventory = useMemo(
@@ -20,7 +27,13 @@ export default function InventoryScreen() {
 
   return (
     <View className="flex-1 bg-gray-100">
-      <ScrollView className="flex-1 px-4 pt-4" contentContainerStyle={{ paddingBottom: 32 }}>
+      <ScrollView
+        className="flex-1 px-4 pt-4"
+        contentContainerStyle={{ paddingBottom: 32 }}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor="#2D5BFF" />
+        }
+      >
         {/* Bottleneck insight card */}
         {topShortage && (
           <View className="mb-4 rounded-2xl border border-warning/30 bg-warning/10 p-4">
