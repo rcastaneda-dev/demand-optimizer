@@ -3,9 +3,9 @@
 ## Phase 1: Backend Foundation
 
 ### 1.1 Project Setup
-- [ ] Initialize Python project with `pyproject.toml` (Python 3.11+)
-- [ ] Install core dependencies: FastAPI, uvicorn, Google OR-Tools, SQLAlchemy
-- [ ] Create project folder structure:
+- [x] Initialize Python project with `pyproject.toml` (Python 3.11+)
+- [x] Install core dependencies: FastAPI, uvicorn, Google OR-Tools, SQLAlchemy
+- [x] Create project folder structure:
   ```
   backend/
     app/
@@ -18,24 +18,24 @@
   ```
 
 ### 1.2 Database Layer (SQLite)
-- [ ] Define SQLAlchemy models:
+- [x] Define SQLAlchemy models:
   - `Inventory` — `sku_id`, `description`, `total_stock_available`
   - `Student` — `student_id`, `school_id`, `uniform_size_sku`, `shoe_size_sku`
   - `Job` — `job_id`, `status` (PENDING/PROCESSING/COMPLETED), `result_json`, `created_at`
-- [ ] Create database initialization script and seed data for testing
-- [ ] Write helper to aggregate student demand into School Demand Profiles (FR1)
+- [x] Create database initialization script and seed data for testing
+- [x] Write helper to aggregate student demand into School Demand Profiles (FR1)
 
 ### 1.3 The ILP Solver (Core Logic)
-- [ ] Implement school demand aggregation: sum SKU needs per school, compute `total_students` per school
-- [ ] Implement the OR-Tools ILP solver (FR4):
+- [x] Implement school demand aggregation: sum SKU needs per school, compute `total_students` per school
+- [x] Implement the OR-Tools ILP solver (FR4):
   - Binary decision variable per school (serve=1 / skip=0)
   - Objective: maximize total students served
   - Constraints: for each SKU, total demand of selected schools ≤ 90% of stock
-- [ ] Generate output reports:
+- [x] Generate output reports:
   - **Selection Report** — list of approved `school_id`s
   - **Inventory Impact Report** — predicted post-distribution stock levels
   - **Shortage Report** — bottleneck SKUs blocking the next-largest excluded school
-- [ ] Write unit tests for the solver with known-answer scenarios
+- [x] Write unit tests for the solver with known-answer scenarios
 
 ### 1.4 API Endpoints
 - [ ] `POST /optimize` — triggers solver as a BackgroundTask, returns `job_id`
