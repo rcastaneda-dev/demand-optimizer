@@ -1,4 +1,4 @@
-import { Pressable, Text, ActivityIndicator } from "react-native";
+import { Pressable, Text, ActivityIndicator, StyleSheet } from "react-native";
 
 interface Props {
   onPress: () => void;
@@ -10,14 +10,40 @@ export default function OptimizeFAB({ onPress, loading }: Props) {
     <Pressable
       onPress={onPress}
       disabled={loading}
-      className="absolute bottom-6 right-6 h-16 w-16 items-center justify-center rounded-full bg-primary shadow-lg active:opacity-80"
-      style={{ elevation: 6 }}
+      style={({ pressed }) => [
+        styles.fab,
+        pressed && { opacity: 0.8 },
+      ]}
     >
       {loading ? (
         <ActivityIndicator color="#fff" />
       ) : (
-        <Text className="text-2xl font-bold text-white">▶</Text>
+        <Text style={styles.icon}>▶</Text>
       )}
     </Pressable>
   );
 }
+
+const styles = StyleSheet.create({
+  fab: {
+    position: "absolute",
+    bottom: 24,
+    right: 24,
+    width: 64,
+    height: 64,
+    borderRadius: 32,
+    backgroundColor: "#2D5BFF",
+    alignItems: "center",
+    justifyContent: "center",
+    elevation: 6,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 6,
+  },
+  icon: {
+    fontSize: 24,
+    fontWeight: "bold",
+    color: "#fff",
+  },
+});

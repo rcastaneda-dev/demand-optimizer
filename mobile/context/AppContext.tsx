@@ -1,6 +1,6 @@
 import React, { createContext, useCallback, useContext, useReducer } from "react";
 import * as api from "@/lib/api";
-import type { InventoryItem, Job, OptimizationResult, School } from "@/lib/types";
+import type { InventoryItem, Job, OptimizationResult, PickingList, School } from "@/lib/types";
 
 // ── State ──
 
@@ -10,6 +10,7 @@ interface AppState {
   currentJob: Job | null;
   isOptimizing: boolean;
   lastResult: OptimizationResult | null;
+  pickingList: PickingList | null;
 }
 
 const initialState: AppState = {
@@ -18,6 +19,7 @@ const initialState: AppState = {
   currentJob: null,
   isOptimizing: false,
   lastResult: null,
+  pickingList: null,
 };
 
 // ── Actions ──
@@ -27,7 +29,8 @@ type Action =
   | { type: "SET_INVENTORY"; payload: InventoryItem[] }
   | { type: "SET_JOB"; payload: Job | null }
   | { type: "SET_OPTIMIZING"; payload: boolean }
-  | { type: "SET_RESULT"; payload: OptimizationResult };
+  | { type: "SET_RESULT"; payload: OptimizationResult }
+  | { type: "SET_PICKING_LIST"; payload: PickingList | null };
 
 function reducer(state: AppState, action: Action): AppState {
   switch (action.type) {
@@ -41,6 +44,8 @@ function reducer(state: AppState, action: Action): AppState {
       return { ...state, isOptimizing: action.payload };
     case "SET_RESULT":
       return { ...state, lastResult: action.payload, isOptimizing: false };
+    case "SET_PICKING_LIST":
+      return { ...state, pickingList: action.payload };
     default:
       return state;
   }
@@ -84,6 +89,9 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         // Refresh inventory to get updated allocations
         const inventory = await api.getInventory();
         dispatch({ type: "SET_INVENTORY", payload: inventory });
+        // Fetch student-level picking list
+        const picking = await api.getPickingList(job_id);
+        dispatch({ type: "SET_PICKING_LIST", payload: picking });
       } else {
         setTimeout(poll, 2000);
       }

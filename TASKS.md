@@ -87,12 +87,12 @@
 ## Phase 3: Integration & Warehouse Features
 
 ### 3.1 Data Upload Flow
-- [ ] Build file upload screen for inventory and student enrollment CSVs
-- [ ] Backend CSV parsing and validation endpoint
+- [x] Build file upload screen for inventory and student enrollment CSVs
+- [x] Backend CSV parsing and validation endpoint
 
 ### 3.2 Warehouse Picking View
-- [ ] Backend endpoint: generate picking list grouped by School → Student → Items
-- [ ] Frontend screen rendering the picking list
+- [x] Backend endpoint: generate picking list grouped by School → Student → Items
+- [x] Frontend screen rendering the picking list
 
 ### 3.3 Mobile-Specific Features
 - [ ] Pull-to-refresh for re-syncing inventory levels

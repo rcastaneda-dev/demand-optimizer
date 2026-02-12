@@ -50,3 +50,25 @@ export interface Job {
   created_at: string;
   result: OptimizationResult | null;
 }
+
+// Picking list types (School → Student → Items)
+
+export interface PickingItem {
+  sku_id: string;
+  type: "shirt" | "pants" | "shoes";
+}
+
+export interface PickingStudent {
+  student_id: string;
+  items: PickingItem[];
+}
+
+export interface PickingSchool {
+  school_id: string;
+  total_students: number;
+  students: PickingStudent[];
+}
+
+export interface PickingList {
+  schools: PickingSchool[];
+}

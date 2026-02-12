@@ -2,28 +2,27 @@ import { useMemo } from "react";
 import { SectionList, Text, View } from "react-native";
 
 import { useApp } from "@/context/AppContext";
+import type { PickingStudent } from "@/lib/types";
+
+const ITEM_TYPE_LABEL: Record<string, string> = {
+  shirt: "Shirt",
+  pants: "Pants",
+  shoes: "Shoes",
+};
 
 export default function WarehouseScreen() {
-  const { schools, lastResult } = useApp();
+  const { pickingList, lastResult } = useApp();
 
-  const selectedIds = new Set(
-    lastResult?.selection.selected_school_ids ?? []
-  );
-
-  // Build picking list grouped by School → Student-level SKU items
   const sections = useMemo(() => {
-    return schools
-      .filter((s) => selectedIds.has(s.school_id))
-      .sort((a, b) => a.school_id.localeCompare(b.school_id))
-      .map((school) => ({
-        title: school.school_id,
-        studentCount: school.total_students,
-        data: Object.entries(school.sku_demand).map(([sku, qty]) => ({
-          sku,
-          qty,
-        })),
-      }));
-  }, [schools, lastResult]);
+    if (!pickingList) return [];
+    return pickingList.schools.map((school) => ({
+      title: school.school_id,
+      studentCount: school.total_students,
+      data: school.students,
+    }));
+  }, [pickingList]);
+
+  const totalStudents = sections.reduce((sum, s) => sum + s.studentCount, 0);
 
   if (!lastResult || sections.length === 0) {
     return (
@@ -43,7 +42,7 @@ export default function WarehouseScreen() {
     <View className="flex-1 bg-gray-50">
       <SectionList
         sections={sections}
-        keyExtractor={(item, index) => `${item.sku}-${index}`}
+        keyExtractor={(item) => item.student_id}
         contentContainerStyle={{ padding: 16, paddingBottom: 32 }}
         stickySectionHeadersEnabled
         renderSectionHeader={({ section }) => (
@@ -56,12 +55,23 @@ export default function WarehouseScreen() {
             </Text>
           </View>
         )}
-        renderItem={({ item }) => (
-          <View className="ml-4 flex-row items-center justify-between border-b border-gray-100 py-3">
-            <Text className="text-sm text-gray-700">{item.sku}</Text>
-            <Text className="text-sm font-bold text-gray-900">
-              ×{item.qty}
+        renderItem={({ item }: { item: PickingStudent }) => (
+          <View className="ml-4 border-b border-gray-100 py-3">
+            <Text className="mb-1 text-sm font-medium text-gray-800">
+              {item.student_id}
             </Text>
+            <View className="flex-row flex-wrap gap-2">
+              {item.items.map((it) => (
+                <View
+                  key={it.type}
+                  className="rounded-md bg-gray-100 px-2 py-1"
+                >
+                  <Text className="text-xs text-gray-600">
+                    {ITEM_TYPE_LABEL[it.type] ?? it.type}: {it.sku_id}
+                  </Text>
+                </View>
+              ))}
+            </View>
           </View>
         )}
         ListHeaderComponent={
@@ -70,7 +80,7 @@ export default function WarehouseScreen() {
               PICKING SUMMARY
             </Text>
             <Text className="mt-1 text-base font-medium text-gray-800">
-              {sections.length} schools · {sections.reduce((sum, s) => sum + s.data.length, 0)} line items
+              {sections.length} schools · {totalStudents} students
             </Text>
           </View>
         }
