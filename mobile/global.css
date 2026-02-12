@@ -1,0 +1,12 @@
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/preflight.css" layer(base);
+@import "tailwindcss/utilities.css";
+
+@import "nativewind/theme";
+
+@theme {
+  --color-primary: #2D5BFF;
+  --color-success: #27AE60;
+  --color-warning: #F2994A;
+  --color-error: #EB5757;
+}

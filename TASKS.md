@@ -50,16 +50,16 @@
 ## Phase 2: Expo Mobile Frontend
 
 ### 2.1 Project Setup
-- [ ] Initialize Expo (React Native) project
-- [ ] Install NativeWind and configure Tailwind
-- [ ] Set up React Context for global state (job status, school list, inventory)
-- [ ] Configure API client pointing to FastAPI backend
+- [x] Initialize Expo (React Native) project
+- [x] Install NativeWind and configure Tailwind
+- [x] Set up React Context for global state (job status, school list, inventory)
+- [x] Configure API client pointing to FastAPI backend
 
 ### 2.2 Optimization Dashboard (Home Screen)
-- [ ] Build header with Global Health bar (total student coverage)
-- [ ] Build summary status cards: Eligible Schools vs. Blocked Schools
-- [ ] Build the "Optimize" FAB that calls `POST /optimize`
-- [ ] Implement job polling: hit `GET /jobs/{id}` until status is COMPLETED
+- [x] Build header with Global Health bar (total student coverage)
+- [x] Build summary status cards: Eligible Schools vs. Blocked Schools
+- [x] Build the "Optimize" FAB that calls `POST /optimize`
+- [x] Implement job polling: hit `GET /jobs/{id}` until status is COMPLETED
 
 ### 2.3 School Selection List (Output View)
 - [ ] Build school card component:
