@@ -38,12 +38,12 @@
 - [x] Write unit tests for the solver with known-answer scenarios
 
 ### 1.4 API Endpoints
-- [ ] `POST /optimize` — triggers solver as a BackgroundTask, returns `job_id`
-- [ ] `GET /jobs/{job_id}` — returns job status and results when completed
-- [ ] `POST /inventory` — upload/upsert inventory data
-- [ ] `POST /students` — upload/upsert student enrollment data
-- [ ] `GET /schools` — list schools with aggregated demand profiles
-- [ ] `GET /inventory` — list inventory with current stock and usage percentages
+- [x] `POST /optimize` — triggers solver as a BackgroundTask, returns `job_id`
+- [x] `GET /jobs/{job_id}` — returns job status and results when completed
+- [x] `POST /inventory` — upload/upsert inventory data
+- [x] `POST /students` — upload/upsert student enrollment data
+- [x] `GET /schools` — list schools with aggregated demand profiles
+- [x] `GET /inventory` — list inventory with current stock and usage percentages
 
 ---
 
