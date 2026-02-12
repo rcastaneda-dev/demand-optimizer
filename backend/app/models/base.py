@@ -1,7 +1,10 @@
+from pathlib import Path
+
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy.orm import DeclarativeBase, sessionmaker
 
-DATABASE_URL = "sqlite+aiosqlite:///./equiproute.db"
+_DB_PATH = Path(__file__).resolve().parent.parent.parent / "equiproute.db"
+DATABASE_URL = f"sqlite+aiosqlite:///{_DB_PATH}"
 
 engine = create_async_engine(DATABASE_URL, echo=False)
 

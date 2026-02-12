@@ -53,11 +53,25 @@ python -c "import asyncio; from app.seed import seed; from app.models.base impor
 uvicorn app.main:app --reload
 ```
 
+## API Endpoints
+
+| Method | Path | Description |
+|--------|------|-------------|
+| `POST` | `/inventory` | Upload/upsert inventory data |
+| `GET` | `/inventory` | List all SKUs with stock levels |
+| `POST` | `/students` | Upload/upsert student enrollment data |
+| `GET` | `/schools` | List schools with aggregated demand profiles |
+| `POST` | `/optimize` | Trigger the ILP solver (returns `job_id`) |
+| `GET` | `/jobs/{job_id}` | Poll job status and retrieve results |
+| `GET` | `/health` | Health check |
+
+Interactive docs available at `/docs` when the server is running.
+
 ## Current Progress
 
 - [x] **Phase 1.1** — Project setup (pyproject.toml, folder structure, dependencies)
 - [x] **Phase 1.2** — Database layer (SQLAlchemy models, seed data, demand aggregation helper)
-- [ ] **Phase 1.3** — ILP solver (OR-Tools optimization engine)
-- [ ] **Phase 1.4** — API endpoints
+- [x] **Phase 1.3** — ILP solver (OR-Tools optimization engine)
+- [x] **Phase 1.4** — API endpoints
 - [ ] **Phase 2** — Expo mobile frontend
 - [ ] **Phase 3** — Integration and warehouse features
