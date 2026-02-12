@@ -62,19 +62,19 @@
 - [x] Implement job polling: hit `GET /jobs/{id}` until status is COMPLETED
 
 ### 2.3 School Selection List (Output View)
-- [ ] Build school card component:
+- [x] Build school card component:
   - School name & district (left)
   - Kit Readiness progress bar (center)
   - Student count (right)
   - Fulfillment Badge (green pill with checkmark for selected schools)
-- [ ] Rank schools by student count
-- [ ] Add Quick Filter sticky bar (Most Students / Fewest Bottlenecks)
-- [ ] Tap-to-expand: show per-school shopping list of sizes
+- [x] Rank schools by student count
+- [x] Add Quick Filter sticky bar (Most Students / Fewest Bottlenecks)
+- [x] Tap-to-expand: show per-school shopping list of sizes
 
 ### 2.4 Inventory Safety Wall (Monitor View)
-- [ ] Build horizontal gauge charts for each SKU showing usage vs. 90% cap
+- [x] Build horizontal gauge charts for each SKU showing usage vs. 90% cap
   - Gauge turns red as it nears the safety buffer
-- [ ] Highlight bottleneck SKU insight message
+- [x] Highlight bottleneck SKU insight message
   - e.g., "Missing 12 pairs of Size 8 shoes to unlock Springfield High"
 
 ### 2.5 Navigation & Polish

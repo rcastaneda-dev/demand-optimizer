@@ -1,6 +1,10 @@
+import { Platform } from "react-native";
 import type { InventoryItem, Job, School } from "./types";
 
-const BASE_URL = "http://10.0.2.2:8000";
+const BASE_URL = Platform.select({
+  android: "http://10.0.2.2:8000",
+  default: "http://localhost:8000",
+});
 
 async function request<T>(path: string, options?: RequestInit): Promise<T> {
   const res = await fetch(`${BASE_URL}${path}`, {
