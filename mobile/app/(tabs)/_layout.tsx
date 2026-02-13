@@ -2,6 +2,10 @@ import React from "react";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { Tabs } from "expo-router";
 
+import { useApp } from "@/context/AppContext";
+import LanguageToggle from "@/components/LanguageToggle";
+import i18n from "@/lib/i18n";
+
 function TabBarIcon(props: {
   name: React.ComponentProps<typeof FontAwesome>["name"];
   color: string;
@@ -10,6 +14,9 @@ function TabBarIcon(props: {
 }
 
 export default function TabLayout() {
+  // Subscribe to locale changes so tab labels re-render
+  const { locale } = useApp();
+
   return (
     <Tabs
       screenOptions={{
@@ -29,12 +36,13 @@ export default function TabLayout() {
         headerStyle: { backgroundColor: "#2D5BFF" },
         headerTintColor: "#fff",
         headerTitleStyle: { fontWeight: "bold", fontFamily: "Inter_700Bold" },
+        headerRight: () => <LanguageToggle />,
       }}
     >
       <Tabs.Screen
         name="index"
         options={{
-          title: "Home",
+          title: i18n.t("nav.home"),
           tabBarIcon: ({ color }) => (
             <TabBarIcon name="dashboard" color={color} />
           ),
@@ -43,7 +51,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="schools"
         options={{
-          title: "Schools",
+          title: i18n.t("nav.schools"),
           tabBarIcon: ({ color }) => (
             <TabBarIcon name="building" color={color} />
           ),
@@ -52,7 +60,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="inventory"
         options={{
-          title: "Inventory",
+          title: i18n.t("nav.inventory"),
           tabBarIcon: ({ color }) => (
             <TabBarIcon name="bar-chart" color={color} />
           ),
@@ -61,7 +69,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="warehouse"
         options={{
-          title: "Warehouse",
+          title: i18n.t("nav.warehouse"),
           tabBarIcon: ({ color }) => (
             <TabBarIcon name="truck" color={color} />
           ),
@@ -70,7 +78,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="upload"
         options={{
-          title: "Upload",
+          title: i18n.t("nav.upload"),
           tabBarIcon: ({ color }) => (
             <TabBarIcon name="upload" color={color} />
           ),

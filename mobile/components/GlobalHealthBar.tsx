@@ -1,4 +1,5 @@
 import { View, Text } from "react-native";
+import i18n from "@/lib/i18n";
 
 interface Props {
   studentsServed: number;
@@ -11,7 +12,7 @@ export default function GlobalHealthBar({ studentsServed, totalStudents }: Props
   return (
     <View className="mb-4 rounded-2xl bg-white p-5 shadow-sm">
       <Text className="mb-1 text-sm font-medium text-gray-500">
-        Student Coverage
+        {i18n.t("common.studentCoverage")}
       </Text>
       <Text className="mb-3 text-3xl font-bold text-gray-900">
         {pct}%
@@ -23,7 +24,7 @@ export default function GlobalHealthBar({ studentsServed, totalStudents }: Props
         />
       </View>
       <Text className="mt-2 text-xs text-gray-400">
-        {studentsServed} of {totalStudents} students served
+        {i18n.t("common.studentsServed", { served: studentsServed, total: totalStudents })}
       </Text>
     </View>
   );

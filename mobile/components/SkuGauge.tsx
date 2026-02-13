@@ -2,15 +2,16 @@ import { useEffect, useRef } from "react";
 import { Platform, Text, View } from "react-native";
 import * as Haptics from "expo-haptics";
 import type { InventoryItem } from "@/lib/types";
+import i18n from "@/lib/i18n";
 
 interface Props {
   item: InventoryItem;
 }
 
 function getBarColor(pct: number): string {
-  if (pct >= 85) return "bg-error";
-  if (pct >= 70) return "bg-warning";
-  return "bg-success";
+  if (pct >= 85) return "#EB5757";
+  if (pct >= 70) return "#F2994A";
+  return "#27AE60";
 }
 
 function getTextColor(pct: number): string {
@@ -50,25 +51,35 @@ export default function SkuGauge({ item }: Props) {
       ) : null}
 
       {/* Gauge bar with 90% cap marker */}
-      <View className="h-3 overflow-hidden rounded-full bg-gray-200">
+      <View style={{ height: 12, borderRadius: 6, backgroundColor: "#E5E7EB", overflow: "hidden" }}>
         <View
-          className={`h-full rounded-full ${getBarColor(pct)}`}
-          style={{ width: `${Math.min(pct, 100)}%` }}
+          style={{
+            height: "100%",
+            borderRadius: 6,
+            backgroundColor: getBarColor(pct),
+            width: `${Math.min(pct, 100)}%`,
+          }}
         />
         {/* 90% cap marker */}
         <View
-          className="absolute top-0 h-full w-0.5 bg-gray-600"
-          style={{ left: "90%" }}
+          style={{
+            position: "absolute",
+            top: 0,
+            left: "90%",
+            height: "100%",
+            width: 2,
+            backgroundColor: "#4B5563",
+          }}
         />
       </View>
 
       {/* Detail text */}
       <View className="mt-2 flex-row justify-between">
         <Text className="text-xs text-gray-400">
-          {item.allocated} / {item.total_stock_available} allocated
+          {i18n.t("common.allocated", { allocated: item.allocated, total: item.total_stock_available })}
         </Text>
         <Text className="text-xs text-gray-400">
-          {item.remaining} remaining
+          {i18n.t("common.remaining", { count: item.remaining })}
         </Text>
       </View>
     </View>

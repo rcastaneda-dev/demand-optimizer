@@ -1,0 +1,77 @@
+{
+  "nav": {
+    "home": "Home",
+    "schools": "Schools",
+    "inventory": "Inventory",
+    "warehouse": "Warehouse",
+    "upload": "Upload"
+  },
+  "dashboard": {
+    "lastOptimization": "Last Optimization",
+    "schoolsSelected": "%{count} schools selected",
+    "bottleneckSkus": "%{count} bottleneck SKU(s)",
+    "noShortages": "No shortages",
+    "noOptimizationYet": "No optimization run yet",
+    "tapToOptimize": "Tap the button below to run the allocation optimizer"
+  },
+  "schools": {
+    "mostStudents": "Most Students",
+    "fewestBottlenecks": "Fewest Bottlenecks",
+    "noSchoolsLoaded": "No schools loaded yet"
+  },
+  "inventory": {
+    "bottleneck": "BOTTLENECK",
+    "missingUnits": "Missing %{deficit} units of %{sku} to unlock %{school}",
+    "safetyCap": "90% safety cap",
+    "noInventory": "No inventory data loaded"
+  },
+  "warehouse": {
+    "shirt": "Shirt",
+    "pants": "Pants",
+    "shoes": "Shoes",
+    "noPickingList": "No picking list available",
+    "runOptimizationHint": "Run an optimization from the Home tab to generate a warehouse prep list",
+    "pickingSummary": "PICKING SUMMARY",
+    "schoolsStudents": "%{schools} schools · %{students} students",
+    "studentsCount": "%{count} students"
+  },
+  "upload": {
+    "title": "Data Upload",
+    "subtitle": "Import inventory and student enrollment data from CSV files",
+    "inventoryLabel": "Inventory CSV",
+    "inventoryDescription": "Upload stock levels for all SKUs",
+    "studentsLabel": "Student Enrollment CSV",
+    "studentsDescription": "Upload student uniform assignments",
+    "requiredColumns": "REQUIRED COLUMNS",
+    "selectFile": "Select File",
+    "uploadButton": "Upload",
+    "recordsUploaded": "%{count} records uploaded successfully",
+    "rowsSkipped": "%{count} row(s) skipped — tap to see details",
+    "fileSelectionFailed": "File Selection Failed",
+    "uploadFailed": "Upload Failed"
+  },
+  "scanner": {
+    "title": "Scan to Verify",
+    "cameraRequired": "Camera access is required to scan barcodes",
+    "grantAccess": "Grant Access",
+    "pointAtBarcode": "Point at a barcode to verify",
+    "approved": "Approved",
+    "notOnList": "Not on Picking List",
+    "skuLabel": "SKU: %{sku}",
+    "scanAnother": "Scan Another"
+  },
+  "common": {
+    "students": "students",
+    "studentCoverage": "Student Coverage",
+    "studentsServed": "%{served} of %{total} students served",
+    "eligibleSchools": "Eligible Schools",
+    "blockedSchools": "Blocked Schools",
+    "allocated": "%{allocated} / %{total} allocated",
+    "remaining": "%{count} remaining",
+    "incomplete": "Incomplete",
+    "fulfilled": "✓ Fulfilled",
+    "blocked": "Blocked",
+    "bottleneckSkus": "%{count} bottleneck SKU(s)",
+    "skuDemand": "SKU DEMAND"
+  }
+}

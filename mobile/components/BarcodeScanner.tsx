@@ -3,6 +3,7 @@ import { Modal, Platform, Pressable, Text, View } from "react-native";
 import { CameraView, useCameraPermissions } from "expo-camera";
 import * as Haptics from "expo-haptics";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
+import i18n from "@/lib/i18n";
 
 interface Props {
   visible: boolean;
@@ -56,7 +57,7 @@ export default function BarcodeScanner({ visible, onClose, approvedSkus }: Props
       <View className="flex-1 bg-black">
         {/* Header */}
         <View className="flex-row items-center justify-between bg-gray-900 px-4 pb-4 pt-14">
-          <Text className="text-lg font-bold text-white">Scan to Verify</Text>
+          <Text className="text-lg font-bold text-white">{i18n.t("scanner.title")}</Text>
           <Pressable onPress={handleClose} className="rounded-full bg-white/20 p-2">
             <FontAwesome name="close" size={20} color="#fff" />
           </Pressable>
@@ -67,13 +68,13 @@ export default function BarcodeScanner({ visible, onClose, approvedSkus }: Props
           <View className="flex-1 items-center justify-center px-8">
             <FontAwesome name="camera" size={48} color="#6B7280" />
             <Text className="mt-4 text-center text-base text-gray-400">
-              Camera access is required to scan barcodes
+              {i18n.t("scanner.cameraRequired")}
             </Text>
             <Pressable
               onPress={requestPermission}
               className="mt-6 rounded-xl bg-primary px-8 py-3"
             >
-              <Text className="text-base font-semibold text-white">Grant Access</Text>
+              <Text className="text-base font-semibold text-white">{i18n.t("scanner.grantAccess")}</Text>
             </Pressable>
           </View>
         ) : (
@@ -100,7 +101,7 @@ export default function BarcodeScanner({ visible, onClose, approvedSkus }: Props
               <View className="absolute inset-0 items-center justify-center">
                 <View className="h-56 w-56 rounded-2xl border-2 border-white/60" />
                 <Text className="mt-4 text-sm text-white/80">
-                  Point at a barcode to verify
+                  {i18n.t("scanner.pointAtBarcode")}
                 </Text>
               </View>
             )}
@@ -121,18 +122,18 @@ export default function BarcodeScanner({ visible, onClose, approvedSkus }: Props
                 color="#fff"
               />
               <Text className="text-lg font-bold text-white">
-                {scanResult.approved ? "Approved" : "Not on Picking List"}
+                {scanResult.approved ? i18n.t("scanner.approved") : i18n.t("scanner.notOnList")}
               </Text>
             </View>
             <Text className="mb-4 text-base text-white/90">
-              SKU: {scanResult.sku}
+              {i18n.t("scanner.skuLabel", { sku: scanResult.sku })}
             </Text>
             <Pressable
               onPress={handleScanAgain}
               className="rounded-xl bg-white/20 px-6 py-3"
             >
               <Text className="text-center text-base font-semibold text-white">
-                Scan Another
+                {i18n.t("scanner.scanAnother")}
               </Text>
             </Pressable>
           </View>

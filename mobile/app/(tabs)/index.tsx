@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { RefreshControl, ScrollView, Text, View } from "react-native";
 
 import { useApp } from "@/context/AppContext";
+import i18n from "@/lib/i18n";
 import GlobalHealthBar from "@/components/GlobalHealthBar";
 import StatusCards from "@/components/StatusCards";
 import OptimizeFAB from "@/components/OptimizeFAB";
@@ -11,6 +12,7 @@ export default function DashboardScreen() {
     schools,
     lastResult,
     isOptimizing,
+    locale,
     fetchSchools,
     fetchInventory,
     startOptimization,
@@ -55,14 +57,14 @@ export default function DashboardScreen() {
         {lastResult && (
           <View className="rounded-2xl bg-white p-4 shadow-sm">
             <Text className="mb-2 text-sm font-medium text-gray-500">
-              Last Optimization
+              {i18n.t("dashboard.lastOptimization")}
             </Text>
             <Text className="text-base text-gray-700">
-              {lastResult.selection.selected_school_ids.length} schools selected
+              {i18n.t("dashboard.schoolsSelected", { count: lastResult.selection.selected_school_ids.length })}
               {" · "}
               {lastResult.shortages.length > 0
-                ? `${lastResult.shortages.length} bottleneck SKU(s)`
-                : "No shortages"}
+                ? i18n.t("dashboard.bottleneckSkus", { count: lastResult.shortages.length })
+                : i18n.t("dashboard.noShortages")}
             </Text>
           </View>
         )}
@@ -70,10 +72,10 @@ export default function DashboardScreen() {
         {!lastResult && !isOptimizing && (
           <View className="items-center rounded-2xl bg-white p-8 shadow-sm">
             <Text className="mb-2 text-base font-medium text-gray-500">
-              No optimization run yet
+              {i18n.t("dashboard.noOptimizationYet")}
             </Text>
             <Text className="text-center text-sm text-gray-400">
-              Tap the button below to run the allocation optimizer
+              {i18n.t("dashboard.tapToOptimize")}
             </Text>
           </View>
         )}

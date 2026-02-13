@@ -1,8 +1,11 @@
 import React, { createContext, useCallback, useContext, useReducer } from "react";
 import * as api from "@/lib/api";
+import i18n from "@/lib/i18n";
 import type { InventoryItem, Job, OptimizationResult, PickingList, School } from "@/lib/types";
 
 // ── State ──
+
+export type Locale = "es" | "en";
 
 interface AppState {
   schools: School[];
@@ -11,6 +14,7 @@ interface AppState {
   isOptimizing: boolean;
   lastResult: OptimizationResult | null;
   pickingList: PickingList | null;
+  locale: Locale;
 }
 
 const initialState: AppState = {
@@ -20,6 +24,7 @@ const initialState: AppState = {
   isOptimizing: false,
   lastResult: null,
   pickingList: null,
+  locale: "es",
 };
 
 // ── Actions ──
@@ -30,7 +35,8 @@ type Action =
   | { type: "SET_JOB"; payload: Job | null }
   | { type: "SET_OPTIMIZING"; payload: boolean }
   | { type: "SET_RESULT"; payload: OptimizationResult }
-  | { type: "SET_PICKING_LIST"; payload: PickingList | null };
+  | { type: "SET_PICKING_LIST"; payload: PickingList | null }
+  | { type: "SET_LOCALE"; payload: Locale };
 
 function reducer(state: AppState, action: Action): AppState {
   switch (action.type) {
@@ -46,6 +52,8 @@ function reducer(state: AppState, action: Action): AppState {
       return { ...state, lastResult: action.payload, isOptimizing: false };
     case "SET_PICKING_LIST":
       return { ...state, pickingList: action.payload };
+    case "SET_LOCALE":
+      return { ...state, locale: action.payload };
     default:
       return state;
   }
@@ -57,6 +65,7 @@ interface AppContextValue extends AppState {
   fetchSchools: () => Promise<void>;
   fetchInventory: () => Promise<void>;
   startOptimization: () => Promise<void>;
+  toggleLocale: () => void;
 }
 
 const AppContext = createContext<AppContextValue | null>(null);
@@ -100,6 +109,12 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     setTimeout(poll, 1000);
   }, []);
 
+  const toggleLocale = useCallback(() => {
+    const newLocale: Locale = i18n.locale === "es" ? "en" : "es";
+    i18n.locale = newLocale;
+    dispatch({ type: "SET_LOCALE", payload: newLocale });
+  }, []);
+
   return (
     <AppContext.Provider
       value={{
@@ -107,6 +122,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         fetchSchools,
         fetchInventory,
         startOptimization,
+        toggleLocale,
       }}
     >
       {children}

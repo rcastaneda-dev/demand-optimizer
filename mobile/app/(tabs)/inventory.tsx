@@ -2,10 +2,11 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { RefreshControl, ScrollView, Text, View } from "react-native";
 
 import { useApp } from "@/context/AppContext";
+import i18n from "@/lib/i18n";
 import SkuGauge from "@/components/SkuGauge";
 
 export default function InventoryScreen() {
-  const { inventory, lastResult, fetchInventory } = useApp();
+  const { inventory, lastResult, locale, fetchInventory } = useApp();
   const [refreshing, setRefreshing] = useState(false);
 
   useEffect(() => {
@@ -38,12 +39,14 @@ export default function InventoryScreen() {
         {topShortage && (
           <View className="mb-4 rounded-2xl border border-warning/30 bg-warning/10 p-4">
             <Text className="mb-1 text-xs font-semibold text-warning">
-              BOTTLENECK
+              {i18n.t("inventory.bottleneck")}
             </Text>
             <Text className="text-sm font-medium text-gray-800">
-              Missing {topShortage.deficit} units of{" "}
-              <Text className="font-bold">{topShortage.sku_id}</Text> to unlock{" "}
-              <Text className="font-bold">{topShortage.school_id}</Text>
+              {i18n.t("inventory.missingUnits", {
+                deficit: topShortage.deficit,
+                sku: topShortage.sku_id,
+                school: topShortage.school_id,
+              })}
             </Text>
           </View>
         )}
@@ -51,7 +54,7 @@ export default function InventoryScreen() {
         {/* 90% cap legend */}
         <View className="mb-3 flex-row items-center gap-2">
           <View className="h-3 w-0.5 bg-gray-600" />
-          <Text className="text-xs text-gray-400">90% safety cap</Text>
+          <Text className="text-xs text-gray-400">{i18n.t("inventory.safetyCap")}</Text>
         </View>
 
         {/* SKU gauges */}
@@ -62,7 +65,7 @@ export default function InventoryScreen() {
         {sortedInventory.length === 0 && (
           <View className="items-center p-8">
             <Text className="text-sm text-gray-400">
-              No inventory data loaded
+              {i18n.t("inventory.noInventory")}
             </Text>
           </View>
         )}

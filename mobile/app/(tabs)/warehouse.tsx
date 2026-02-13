@@ -3,17 +3,17 @@ import { Pressable, RefreshControl, SectionList, Text, View } from "react-native
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 
 import { useApp } from "@/context/AppContext";
+import i18n from "@/lib/i18n";
 import BarcodeScanner from "@/components/BarcodeScanner";
 import type { PickingStudent } from "@/lib/types";
 
-const ITEM_TYPE_LABEL: Record<string, string> = {
-  shirt: "Shirt",
-  pants: "Pants",
-  shoes: "Shoes",
-};
+function itemTypeLabel(type: string): string {
+  const key = `warehouse.${type}` as const;
+  return i18n.t(key, { defaultValue: type });
+}
 
 export default function WarehouseScreen() {
-  const { pickingList, lastResult, fetchInventory } = useApp();
+  const { pickingList, lastResult, locale, fetchInventory } = useApp();
   const [refreshing, setRefreshing] = useState(false);
   const [scannerOpen, setScannerOpen] = useState(false);
 
@@ -53,11 +53,10 @@ export default function WarehouseScreen() {
     return (
       <View className="flex-1 items-center justify-center bg-gray-50 px-8">
         <Text className="mb-2 text-base font-medium text-gray-500">
-          No picking list available
+          {i18n.t("warehouse.noPickingList")}
         </Text>
         <Text className="text-center text-sm text-gray-400">
-          Run an optimization from the Home tab to generate a warehouse prep
-          list
+          {i18n.t("warehouse.runOptimizationHint")}
         </Text>
       </View>
     );
@@ -85,7 +84,7 @@ export default function WarehouseScreen() {
               {section.title}
             </Text>
             <Text className="text-xs text-primary/70">
-              {section.studentCount} students
+              {i18n.t("warehouse.studentsCount", { count: section.studentCount })}
             </Text>
           </View>
         )}
@@ -101,7 +100,7 @@ export default function WarehouseScreen() {
                   className="rounded-md bg-gray-100 px-2 py-1"
                 >
                   <Text className="text-xs text-gray-600">
-                    {ITEM_TYPE_LABEL[it.type] ?? it.type}: {it.sku_id}
+                    {itemTypeLabel(it.type)}: {it.sku_id}
                   </Text>
                 </View>
               ))}
@@ -111,10 +110,10 @@ export default function WarehouseScreen() {
         ListHeaderComponent={
           <View className="mb-2 rounded-xl bg-white p-4 shadow-sm">
             <Text className="text-xs font-semibold text-gray-400">
-              PICKING SUMMARY
+              {i18n.t("warehouse.pickingSummary")}
             </Text>
             <Text className="mt-1 text-base font-medium text-gray-800">
-              {sections.length} schools · {totalStudents} students
+              {i18n.t("warehouse.schoolsStudents", { schools: sections.length, students: totalStudents })}
             </Text>
           </View>
         }
@@ -123,8 +122,22 @@ export default function WarehouseScreen() {
       {/* Scan-to-Verify FAB */}
       <Pressable
         onPress={() => setScannerOpen(true)}
-        className="absolute bottom-6 right-6 h-14 w-14 items-center justify-center rounded-full bg-primary shadow-lg"
-        style={{ elevation: 6 }}
+        style={{
+          position: "absolute",
+          bottom: 24,
+          right: 24,
+          width: 56,
+          height: 56,
+          borderRadius: 28,
+          backgroundColor: "#2D5BFF",
+          alignItems: "center",
+          justifyContent: "center",
+          elevation: 6,
+          shadowColor: "#000",
+          shadowOffset: { width: 0, height: 4 },
+          shadowOpacity: 0.3,
+          shadowRadius: 6,
+        }}
       >
         <FontAwesome name="barcode" size={24} color="#fff" />
       </Pressable>

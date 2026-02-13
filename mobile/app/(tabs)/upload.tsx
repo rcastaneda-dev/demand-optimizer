@@ -12,24 +12,25 @@ import * as DocumentPicker from "expo-document-picker";
 
 import { uploadCSVText } from "@/lib/api";
 import { useApp } from "@/context/AppContext";
+import i18n from "@/lib/i18n";
 
 interface UploadSection {
-  label: string;
-  description: string;
+  labelKey: string;
+  descriptionKey: string;
   endpoint: "inventory" | "students";
   columns: string;
 }
 
 const SECTIONS: UploadSection[] = [
   {
-    label: "Inventory CSV",
-    description: "Upload stock levels for all SKUs",
+    labelKey: "upload.inventoryLabel",
+    descriptionKey: "upload.inventoryDescription",
     endpoint: "inventory",
     columns: "sku_id, description, total_stock_available",
   },
   {
-    label: "Student Enrollment CSV",
-    description: "Upload student uniform assignments",
+    labelKey: "upload.studentsLabel",
+    descriptionKey: "upload.studentsDescription",
     endpoint: "students",
     columns: "student_id, school_id, shirt_sku, pants_sku, shoe_size_sku",
   },
@@ -71,7 +72,7 @@ function UploadCard({ section }: { section: UploadSection }) {
         setResult(null);
       }
     } catch (err: any) {
-      Alert.alert("File Selection Failed", err.message);
+      Alert.alert(i18n.t("upload.fileSelectionFailed"), err.message);
     }
   };
 
@@ -90,7 +91,7 @@ function UploadCard({ section }: { section: UploadSection }) {
         await fetchSchools();
       }
     } catch (err: any) {
-      Alert.alert("Upload Failed", err.message);
+      Alert.alert(i18n.t("upload.uploadFailed"), err.message);
     } finally {
       setUploading(false);
     }
@@ -99,13 +100,13 @@ function UploadCard({ section }: { section: UploadSection }) {
   return (
     <View className="mb-4 rounded-2xl bg-white p-5 shadow-sm">
       <Text className="text-base font-bold text-gray-900">
-        {section.label}
+        {i18n.t(section.labelKey)}
       </Text>
-      <Text className="mt-1 text-sm text-gray-500">{section.description}</Text>
+      <Text className="mt-1 text-sm text-gray-500">{i18n.t(section.descriptionKey)}</Text>
 
       <View className="mt-3 rounded-lg bg-gray-50 px-3 py-2">
         <Text className="text-xs font-medium text-gray-400">
-          REQUIRED COLUMNS
+          {i18n.t("upload.requiredColumns")}
         </Text>
         <Text className="mt-1 text-xs text-gray-600">{section.columns}</Text>
       </View>
@@ -122,7 +123,7 @@ function UploadCard({ section }: { section: UploadSection }) {
           }}
         >
           <Text style={{ fontSize: 14, fontWeight: "500", color: "#374151" }}>
-            Select File
+            {i18n.t("upload.selectFile")}
           </Text>
         </Pressable>
 
@@ -149,7 +150,7 @@ function UploadCard({ section }: { section: UploadSection }) {
           <ActivityIndicator color="#fff" />
         ) : (
           <Text style={{ fontSize: 14, fontWeight: "700", color: "#fff" }}>
-            Upload
+            {i18n.t("upload.uploadButton")}
           </Text>
         )}
       </Pressable>
@@ -157,11 +158,11 @@ function UploadCard({ section }: { section: UploadSection }) {
       {result && (
         <View className="mt-3 rounded-lg bg-success/10 px-3 py-2">
           <Text className="text-sm font-medium text-success">
-            {result.upserted} records uploaded successfully
+            {i18n.t("upload.recordsUploaded", { count: result.upserted })}
           </Text>
           {result.errors.length > 0 && (
             <Text className="mt-1 text-xs text-warning">
-              {result.errors.length} row(s) skipped — tap to see details
+              {i18n.t("upload.rowsSkipped", { count: result.errors.length })}
             </Text>
           )}
         </View>
@@ -171,16 +172,19 @@ function UploadCard({ section }: { section: UploadSection }) {
 }
 
 export default function UploadScreen() {
+  // Subscribe to locale so the screen re-renders on language change
+  const { locale } = useApp();
+
   return (
     <ScrollView
       className="flex-1 bg-gray-50"
       contentContainerStyle={{ padding: 16, paddingBottom: 32 }}
     >
       <Text className="mb-1 text-lg font-bold text-gray-900">
-        Data Upload
+        {i18n.t("upload.title")}
       </Text>
       <Text className="mb-5 text-sm text-gray-500">
-        Import inventory and student enrollment data from CSV files
+        {i18n.t("upload.subtitle")}
       </Text>
 
       {SECTIONS.map((section) => (

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Platform, Pressable, Text, View } from "react-native";
 import type { School } from "@/lib/types";
+import i18n from "@/lib/i18n";
 
 interface Props {
   school: School;
@@ -35,7 +36,7 @@ export default function SchoolCard({ school, isSelected, shortageCount }: Props)
               className="text-sm text-gray-500"
               style={{ fontFamily: "Inter_500Medium" }}
             >
-              {school.total_students} students
+              {school.total_students} {i18n.t("common.students")}
             </Text>
           </View>
 
@@ -51,7 +52,7 @@ export default function SchoolCard({ school, isSelected, shortageCount }: Props)
               className="mt-1 text-center text-xs text-gray-400"
               style={{ fontFamily: "Inter_400Regular" }}
             >
-              {isSelected ? "100%" : "Incomplete"}
+              {isSelected ? "100%" : i18n.t("common.incomplete")}
             </Text>
           </View>
 
@@ -63,7 +64,7 @@ export default function SchoolCard({ school, isSelected, shortageCount }: Props)
               className={`text-xs ${isSelected ? "text-success" : "text-error"}`}
               style={{ fontFamily: "Inter_600SemiBold" }}
             >
-              {isSelected ? "\u2713 Fulfilled" : "Blocked"}
+              {isSelected ? i18n.t("common.fulfilled") : i18n.t("common.blocked")}
             </Text>
           </View>
         </View>
@@ -74,7 +75,7 @@ export default function SchoolCard({ school, isSelected, shortageCount }: Props)
             className="mt-2 text-xs text-warning"
             style={{ fontFamily: "Inter_500Medium" }}
           >
-            {shortageCount} bottleneck SKU(s)
+            {i18n.t("common.bottleneckSkus", { count: shortageCount })}
           </Text>
         )}
 
@@ -85,7 +86,7 @@ export default function SchoolCard({ school, isSelected, shortageCount }: Props)
               className="mb-2 text-xs text-gray-500"
               style={{ fontFamily: "Inter_600SemiBold" }}
             >
-              SKU DEMAND
+              {i18n.t("common.skuDemand")}
             </Text>
             {skuEntries.map(([sku, qty]) => (
               <View key={sku} className="flex-row justify-between py-1">

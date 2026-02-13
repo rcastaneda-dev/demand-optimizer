@@ -2,12 +2,13 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { FlatList, Pressable, RefreshControl, Text, View } from "react-native";
 
 import { useApp } from "@/context/AppContext";
+import i18n from "@/lib/i18n";
 import SchoolCard from "@/components/SchoolCard";
 
 type SortMode = "students" | "bottlenecks";
 
 export default function SchoolsScreen() {
-  const { schools, lastResult, fetchSchools } = useApp();
+  const { schools, lastResult, locale, fetchSchools } = useApp();
   const [sortMode, setSortMode] = useState<SortMode>("students");
   const [refreshing, setRefreshing] = useState(false);
 
@@ -51,12 +52,12 @@ export default function SchoolsScreen() {
       {/* Quick Filter bar */}
       <View className="flex-row gap-2 bg-white px-4 py-3 shadow-sm">
         <FilterChip
-          label="Most Students"
+          label={i18n.t("schools.mostStudents")}
           active={sortMode === "students"}
           onPress={() => setSortMode("students")}
         />
         <FilterChip
-          label="Fewest Bottlenecks"
+          label={i18n.t("schools.fewestBottlenecks")}
           active={sortMode === "bottlenecks"}
           onPress={() => setSortMode("bottlenecks")}
         />
@@ -79,7 +80,7 @@ export default function SchoolsScreen() {
         ListEmptyComponent={
           <View className="items-center p-8">
             <Text className="text-sm text-gray-400">
-              No schools loaded yet
+              {i18n.t("schools.noSchoolsLoaded")}
             </Text>
           </View>
         }

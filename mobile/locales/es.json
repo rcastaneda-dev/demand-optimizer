@@ -1,0 +1,77 @@
+{
+  "nav": {
+    "home": "Inicio",
+    "schools": "Escuelas",
+    "inventory": "Inventario",
+    "warehouse": "Almacén",
+    "upload": "Carga"
+  },
+  "dashboard": {
+    "lastOptimization": "Última Optimización",
+    "schoolsSelected": "%{count} escuelas seleccionadas",
+    "bottleneckSkus": "%{count} SKU(s) cuello de botella",
+    "noShortages": "Sin faltantes",
+    "noOptimizationYet": "Aún no se ha ejecutado una optimización",
+    "tapToOptimize": "Toca el botón de abajo para ejecutar el optimizador de asignación"
+  },
+  "schools": {
+    "mostStudents": "Más Alumnos",
+    "fewestBottlenecks": "Menos Cuellos de Botella",
+    "noSchoolsLoaded": "No se han cargado escuelas"
+  },
+  "inventory": {
+    "bottleneck": "CUELLO DE BOTELLA",
+    "missingUnits": "Faltan %{deficit} unidades de %{sku} para habilitar %{school}",
+    "safetyCap": "Límite de seguridad 90%",
+    "noInventory": "No hay datos de inventario"
+  },
+  "warehouse": {
+    "shirt": "Camisa",
+    "pants": "Pantalón",
+    "shoes": "Zapatos",
+    "noPickingList": "No hay lista de preparación",
+    "runOptimizationHint": "Ejecuta una optimización desde la pestaña Inicio para generar la lista de preparación del almacén",
+    "pickingSummary": "RESUMEN DE PREPARACIÓN",
+    "schoolsStudents": "%{schools} escuelas · %{students} alumnos",
+    "studentsCount": "%{count} alumnos"
+  },
+  "upload": {
+    "title": "Carga de Datos",
+    "subtitle": "Importa datos de inventario y matrícula estudiantil desde archivos CSV",
+    "inventoryLabel": "CSV de Inventario",
+    "inventoryDescription": "Carga los niveles de stock para todos los SKUs",
+    "studentsLabel": "CSV de Matrícula Estudiantil",
+    "studentsDescription": "Carga las asignaciones de uniforme de los alumnos",
+    "requiredColumns": "COLUMNAS REQUERIDAS",
+    "selectFile": "Seleccionar Archivo",
+    "uploadButton": "Cargar",
+    "recordsUploaded": "%{count} registros cargados exitosamente",
+    "rowsSkipped": "%{count} fila(s) omitida(s) — toca para ver detalles",
+    "fileSelectionFailed": "Error al seleccionar archivo",
+    "uploadFailed": "Error al cargar"
+  },
+  "scanner": {
+    "title": "Escanear para Verificar",
+    "cameraRequired": "Se requiere acceso a la cámara para escanear códigos de barras",
+    "grantAccess": "Permitir Acceso",
+    "pointAtBarcode": "Apunta al código de barras para verificar",
+    "approved": "Aprobado",
+    "notOnList": "No está en la Lista de Preparación",
+    "skuLabel": "SKU: %{sku}",
+    "scanAnother": "Escanear Otro"
+  },
+  "common": {
+    "students": "alumnos",
+    "studentCoverage": "Cobertura de Alumnos",
+    "studentsServed": "%{served} de %{total} alumnos atendidos",
+    "eligibleSchools": "Escuelas Elegibles",
+    "blockedSchools": "Escuelas Bloqueadas",
+    "allocated": "%{allocated} / %{total} asignados",
+    "remaining": "%{count} restantes",
+    "incomplete": "Incompleto",
+    "fulfilled": "✓ Completo",
+    "blocked": "Bloqueado",
+    "bottleneckSkus": "%{count} SKU(s) cuello de botella",
+    "skuDemand": "DEMANDA POR SKU"
+  }
+}
